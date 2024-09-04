@@ -6,32 +6,46 @@ import java.util.Scanner;
 class Bank {
     private Map<Integer, Account> accounts;
 
-    public Bank(){
+    public Bank() {
         accounts = new HashMap<>();
     }
 
-    public void addAccount(Account account){
+    public void addAccount(Account account) {
         accounts.put(account.getAccountNumber(), account);
+    }
+
+    public Account getAccount(int accountNumber) {
+        return accounts.get(accountNumber);
     }
 
 }
 
-// Account class
-class Account{
+// Account class    
+class Account {
     private int accountNumber;
     private double balance;
 
-    public Account(int accountNumber){
+    public Account(int accountNumber) {
         this.accountNumber = accountNumber;
         this.balance = 0.0;
     }
 
-    public int getAccountNumber(){
+    public int getAccountNumber() {
         return accountNumber;
     }
 
-    public double getBalance(){
+    public double getBalance() {
         return balance;
+    }
+
+    public void depositMoney(double amount){
+        if (amount > 0){
+            balance+=amount;
+            System.out.println("Deposited: $" + amount);
+
+        }else{
+            System.out.println("Please deposit a valid amount of money");
+        }
     }
 }
 
@@ -61,9 +75,9 @@ public class BankingSystem {
                 case 2:
                     break;
                 case 3:
-                    break;
+                    checkBalance();;
                 case 4:
-                    break;
+                    depositMoney();
                 case 5:
                     break;
                 case 6:
@@ -77,11 +91,36 @@ public class BankingSystem {
 
         }
     }
-    private static void createAccount(){
+
+    private static void createAccount() {
         System.out.println("Enter an Account number (Number): ");
         int accountNumber = scanner.nextInt();
         Account account = new Account(accountNumber);
         bank.addAccount(account);
         System.out.println("Account created successfully!");
+    }
+
+    private static void checkBalance() {
+        System.out.println("Enter account number: ");
+        int accountNumber = scanner.nextInt();
+        Account account = bank.getAccount(accountNumber);
+        if (account == null) {
+            System.out.println("Account not found");
+            return;
+        }
+        System.out.println("Account balance: $" + account.getBalance());
+    }
+
+    private static void depositMoney(){
+        System.out.println("Enter account number: ");
+        int accountNumber = scanner.nextInt();
+        Account account = bank.getAccount(accountNumber);
+        if (account ==null){
+            System.out.println("Account not found");
+            return;
+        } 
+        System.out.println("Enter amount to deposit");
+        double amount = scanner.nextDouble();
+        account.depositMoney(amount);
     }
 }
