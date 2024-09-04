@@ -47,6 +47,15 @@ class Account {
             System.out.println("Please deposit a valid amount of money");
         }
     }
+    public void Widthraw(double amount){
+        if(amount < 100){
+            System.out.println("Amount too low to be widhtrawn");
+        }else{
+            balance-= amount;
+            System.out.println("Widthdrawn: $" + amount);
+            System.out.println("New account balance is: $" + getBalance());
+        }
+    }
 }
 
 public class BankingSystem {
@@ -56,13 +65,12 @@ public class BankingSystem {
     public static void main(String[] args) {
         while (true) {
             System.out.println("\nWelcome to Changa Banking System");
-            System.out.println("1. Create a customer");
-            System.out.println("2. Create an account");
+            System.out.println("1. Create an account");
+            System.out.println("2. Option unavailable");
             System.out.println("3. Check account balance");
             System.out.println("4. Deposit money to the account");
             System.out.println("5. Widthraw money from the account");
-            System.out.println("6. Transfer money");
-            System.out.println("7. Exit");
+            System.out.println("6. Exit");
             System.out.println("Choose an option");
 
             int choice = scanner.nextInt();
@@ -73,18 +81,15 @@ public class BankingSystem {
                     createAccount();
                     break;
                 case 2:
-                    break;
+                    System.out.println("Nothing to see here");
                 case 3:
                     checkBalance();;
                 case 4:
                     depositMoney();
                 case 5:
-                    break;
+                    widthraw();
                 case 6:
                     break;
-                case 7:
-                    break;
-
                 default:
                     break;
             }
@@ -122,5 +127,18 @@ public class BankingSystem {
         System.out.println("Enter amount to deposit");
         double amount = scanner.nextDouble();
         account.depositMoney(amount);
+    }
+
+    private static void widthraw(){
+        System.out.println("Enter account number: ");
+        int accountNumber = scanner.nextInt();
+        Account account = bank.getAccount(accountNumber);
+        if (account ==null){
+            System.out.println("Account not found");
+            return;
+        } 
+        System.out.println("Enter amount to widthraw: ");
+        double amount = scanner.nextDouble();
+        account.Widthraw(amount);
     }
 }
